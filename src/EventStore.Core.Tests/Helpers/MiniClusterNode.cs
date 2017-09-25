@@ -188,6 +188,7 @@ namespace EventStore.Core.Tests.Helpers
             ICheckpoint chaserChk;
             ICheckpoint epochChk;
             ICheckpoint truncateChk;
+            ICheckpoint replicationCheckpoint = new InMemoryCheckpoint(-1);
             if (inMemDb)
             {
                 writerChk = new InMemoryCheckpoint(Checkpoint.Writer);
