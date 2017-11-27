@@ -13,7 +13,7 @@ namespace EventStore.Core.Tests.TransactionLog
         public override void SetUp()
         {
             base.SetUp();
-            _chunk = TFChunk.CreateNew(Filename, 1000, 0, 0, isScavenged: false, inMem: false, unbuffered: false, writethrough: false);
+            _chunk = TFChunkDbHelper.CreateNewChunk(Filename, false, 1000);
             _chunk.MarkForDeletion();
         }
 

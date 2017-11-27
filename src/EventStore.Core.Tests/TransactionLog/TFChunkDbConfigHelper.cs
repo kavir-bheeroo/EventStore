@@ -1,5 +1,6 @@
 using EventStore.Core.TransactionLog.Checkpoint;
 using EventStore.Core.TransactionLog.Chunks;
+using EventStore.Core.TransactionLog.Chunks.TFChunk;
 using EventStore.Core.TransactionLog.FileNamingStrategy;
 using EventStore.Core.Util;
 
@@ -33,6 +34,16 @@ namespace EventStore.Core.Tests.TransactionLog
                                              new InMemoryCheckpoint(-1),
                                              new InMemoryCheckpoint(-1),
                                              Opts.TFChunkInitialReaderCountDefault);
+        }
+    }
+
+    public static class TFChunkDbHelper
+    {
+        public static TFChunk CreateNewChunk(string fileName, bool isScavenged, int chunkSize = 4096)
+        {
+            return TFChunk.CreateNew(fileName, chunkSize, 0, 0, 
+                                     isScavenged: isScavenged, inMem: false, unbuffered: false, 
+                                     writethrough: false, initialReaderCount: 5);
         }
     }
 }
