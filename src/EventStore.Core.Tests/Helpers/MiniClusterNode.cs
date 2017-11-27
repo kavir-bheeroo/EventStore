@@ -221,7 +221,7 @@ namespace EventStore.Core.Tests.Helpers
             }
             var nodeConfig = new TFChunkDbConfig(
                 dbPath, new VersionedPatternFileNamingStrategy(dbPath, "chunk-"), chunkSize, chunksCacheSize, writerChk,
-                chaserChk, epochChk, truncateChk, inMemDb);
+                chaserChk, epochChk, truncateChk, Opts.TFChunkInitialReaderCountDefault, inMemDb);
             return nodeConfig;
         }
     }

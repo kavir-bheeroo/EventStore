@@ -67,7 +67,8 @@ namespace EventStore.Core.Tests.Services.Storage
                                                    WriterCheckpoint,
                                                    ChaserCheckpoint,
                                                    new InMemoryCheckpoint(-1),
-                                                   new InMemoryCheckpoint(-1)));
+                                                   new InMemoryCheckpoint(-1),
+                                                   Opts.TFChunkInitialReaderCountDefault));
 
             Db.Open();
             // create db

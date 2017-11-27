@@ -101,6 +101,7 @@ namespace EventStore.Core
         protected int _readerThreadsCount;
         protected bool _unbuffered;
         protected bool _writethrough;
+        protected int _tfChunkInitialReaderCount;
 
         protected string _index;
         protected bool _skipIndexVerify;
@@ -211,6 +212,7 @@ namespace EventStore.Core
             _unsafeDisableFlushToDisk = Opts.UnsafeDisableFlushToDiskDefault;
             _alwaysKeepScavenged = Opts.AlwaysKeepScavengedDefault;
             _skipIndexScanOnReads = Opts.SkipIndexScanOnReadsDefault;
+            _tfChunkInitialReaderCount = Opts.TFChunkInitialReaderCountDefault;
         }
 
         protected VNodeBuilder WithSingleNodeSettings()
@@ -1022,6 +1024,16 @@ namespace EventStore.Core
             return this;
         }
 
+        /// <summary>
+        /// Sets the initial number of readers to open per TFChunk
+        /// </summary>
+        /// <param name="tfChunkInitialReaderCount">The initial number of readers to open per TFChunk</param>
+        /// <returns>A <see cref="VNodeBuilder"/> with the options set</returns>
+        public VNodeBuilder WithTFChunkInitialReaderCount(int tfChunkInitialReaderCount)
+        {
+            _tfChunkInitialReaderCount = tfChunkInitialReaderCount;
+            return this;
+        }
 
         /// <summary>
         /// Sets the Server SSL Certificate
@@ -1298,6 +1310,7 @@ namespace EventStore.Core
                                        _inMemoryDb, 
                                        _unbuffered,
                                        _writethrough,
+                                       _tfChunkInitialReaderCount,
                                        _log);
             FileStreamExtensions.ConfigureFlush(disableFlushToDisk: _unsafeDisableFlushToDisk);
 
@@ -1407,6 +1420,7 @@ namespace EventStore.Core
                                                       bool inMemDb,
                                                       bool unbuffered,
                                                       bool writethrough,
+                                                      int tfChunkInitialReaderCount,
                                                       ILogger log)
         {
             ICheckpoint writerChk;
@@ -1474,6 +1488,7 @@ namespace EventStore.Core
                                                  chaserChk,
                                                  epochChk,
                                                  truncateChk,
+                                                 tfChunkInitialReaderCount,
                                                  inMemDb,
                                                  unbuffered,
                                                  writethrough);

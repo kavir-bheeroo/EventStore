@@ -17,6 +17,7 @@ namespace EventStore.Core.TransactionLog.Chunks
         public readonly bool InMemDb;
         public readonly bool Unbuffered;
         public readonly bool WriteThrough;
+        public readonly int InitialReaderCount;
 
         public TFChunkDbConfig(string path, 
                                IFileNamingStrategy fileNamingStrategy, 
@@ -26,6 +27,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                                ICheckpoint chaserCheckpoint,
                                ICheckpoint epochCheckpoint,
                                ICheckpoint truncateCheckpoint,
+                               int initialReaderCount,
                                bool inMemDb = false,
                                bool unbuffered = false,
                                bool writethrough = false)
@@ -38,6 +40,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             Ensure.NotNull(chaserCheckpoint, "chaserCheckpoint");
             Ensure.NotNull(epochCheckpoint, "epochCheckpoint");
             Ensure.NotNull(truncateCheckpoint, "truncateCheckpoint");
+            Ensure.Positive(initialReaderCount, "initialReaderCount");
             
             Path = path;
             ChunkSize = chunkSize;
@@ -50,6 +53,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             InMemDb = inMemDb;
             Unbuffered = unbuffered;
             WriteThrough = writethrough;
+            InitialReaderCount = initialReaderCount;
         }
     }
 }

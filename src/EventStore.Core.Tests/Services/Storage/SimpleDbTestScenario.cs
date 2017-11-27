@@ -45,7 +45,8 @@ namespace EventStore.Core.Tests.Services.Storage
                                                new InMemoryCheckpoint(0),
                                                new InMemoryCheckpoint(0),
                                                new InMemoryCheckpoint(-1),
-                                               new InMemoryCheckpoint(-1));
+                                               new InMemoryCheckpoint(-1),
+                                               Opts.TFChunkInitialReaderCountDefault);
             var dbCreationHelper = new TFChunkDbCreationHelper(dbConfig);
             
             DbRes = CreateDb(dbCreationHelper);
